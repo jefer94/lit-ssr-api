@@ -2,20 +2,10 @@ import { render } from "@lit-labs/ssr";
 import { collectResultSync } from "@lit-labs/ssr/lib/render-result.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { HttpResponse } from "./types";
-// import sha1 from "./sha1";
-// import fs from "fs";
-// import writeFile from "./writeFile";
-// import path from "path";
+
 import loadModule from "./loadModule";
 
 import { html } from "lit";
-
-// const cache = new Map<string, any>();
-// const tmpPath = "./tmp";
-
-// if (!fs.existsSync(tmpPath)) {
-//   fs.mkdirSync(tmpPath, 744);
-// }
 
 function validate(body): [number, any, Record<string, string>] | undefined {
   if (!body || Object.keys(body).length === 0) {
@@ -84,5 +74,6 @@ export async function renderLitElement(body: any): Promise<HttpResponse> {
   const template = html`${unsafeHTML(body.html)}`;
   const ssrResult = render(template);
 
+  // status, body, headers
   return [200, { html: collectResultSync(ssrResult) }, {}];
 }
